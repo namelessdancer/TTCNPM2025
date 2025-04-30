@@ -20,7 +20,7 @@ function Home() {
             backgroundSize: "contain",
           }}
         >
-          <div className="col-span-12 md:col-span-8">
+          <div className="col-span-12 mt-20 md:col-span-8">
             <img src={images.banner} alt="" className="object-cover" />
           </div>
           <div className="col-span-12 flex h-full flex-col justify-center md:col-span-4">
