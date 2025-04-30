@@ -1,0 +1,28 @@
+# === Node modules ===
+ggstore-main/node_modules/
+calorie-tracker-server/node_modules/
+
+# === Build outputs ===
+ggstore-main/build/
+ggstore-main/dist/
+calorie-tracker-server/dist/
+
+# === Environment variables ===
+*.env
+
+# === Logs ===
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# === OS files ===
+.DS_Store
+Thumbs.db
+
+# === IDE files ===
+.vscode/
+.idea/
+
+# === Optional: test coverage ===
+coverage/
