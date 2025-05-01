@@ -57,7 +57,7 @@ function AboutContent() {
           </p>
         </a>
         <a
-          href={"/contact"}
+          href={"/ggstore/contact"}
           className="group col-span-12 pb-4 text-center font-medium md:col-span-4"
         >
           <span className="relative h-14 w-9">
