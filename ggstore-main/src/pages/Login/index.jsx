@@ -13,7 +13,8 @@ function Login() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (localStorage.getItem("username")) {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser && storedUser._id) {
       navigate("/");
     }
   }, [navigate]);
@@ -47,12 +48,20 @@ function Login() {
       );
 
       // Lưu username vào localStorage
-      localStorage.setItem("username", response.data.username);
+      localStorage.setItem("user", JSON.stringify(response.data));
 
       setError(false);
       navigate("/");
     } catch (error) {
-      console.error("Login failed", error);
+      console.error(
+        "Login failed:",
+        error.response?.data?.message || error.message
+      );
+
+      // ✅ Hiển thị lỗi cụ thể nếu có
+      if (error.response?.data?.message) {
+        alert(error.response.data.message);
+      }
       setError(true);
     }
   };

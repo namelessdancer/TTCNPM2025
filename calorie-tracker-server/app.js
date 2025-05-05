@@ -26,6 +26,7 @@ const authRoutes = require("./routes/auth");
 // Sử dụng routes
 app.use("/api/fooditems", foodItemRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/weightlogs", require("./routes/weightLogs"));
 
 // Route kiểm tra
 app.get("/", (req, res) => {

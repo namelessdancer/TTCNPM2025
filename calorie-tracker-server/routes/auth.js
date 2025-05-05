@@ -46,9 +46,13 @@ router.post("/login", async (req, res) => {
     }
 
     // Nếu đúng thì trả về thông tin
-    res
-      .status(200)
-      .json({ message: "Login successful", username: user.username });
+    res.status(200).json({
+      message: "Login successful",
+      user: {
+        _id: user._id,
+        username: user.username,
+      },
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });

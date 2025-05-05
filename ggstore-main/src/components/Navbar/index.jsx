@@ -4,15 +4,36 @@ import { useState, useEffect } from "react";
 
 function Navbar(props) {
   const [menu, setMenu] = useState(false);
+  const [user, setUser] = useState(() => {
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
+
   const navigate = useNavigate();
 
   useEffect(() => {
     ScrollHandle();
   }, [menu]);
 
+  useEffect(() => {
+    // Listen for storage changes (in case you want cross-tab sync)
+    const handleStorageChange = () => {
+      const storedUser = localStorage.getItem("user");
+      setUser(storedUser ? JSON.parse(storedUser) : null);
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    handleStorageChange(); // Initial run in case of update from same tab
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
+
   function logout() {
-    localStorage.removeItem("username"); // Chỉ xóa username thôi
-    navigate("/"); // Quay về trang chủ
+    localStorage.removeItem("user");
+    setUser(null); // cập nhật lại state
+    navigate("/");
   }
 
   const HandleMenuOnclick = () => {
@@ -23,12 +44,6 @@ function Navbar(props) {
     const navbar = document.getElementById("mynav");
     if (navbar) {
       window.onscroll = () => {
-        if (window.scrollY > window.innerHeight) {
-          navbar.classList.add("bg-[#1f1f1f]");
-        } else {
-          navbar.classList.remove("bg-[#1f1f1f]");
-        }
-
         if (window.scrollY > window.innerHeight - 80) {
           navbar.classList.add("shadow-md", "border-b", "border-[#0c0c0c]");
         } else {
@@ -39,7 +54,7 @@ function Navbar(props) {
   };
 
   const RenderNavbar = () => {
-    const username = localStorage.getItem("username");
+    const username = user?.user?.username;
 
     return (
       <div
@@ -56,7 +71,6 @@ function Navbar(props) {
               props.variant === "about" ? images.logoFullwhite : images.logoFull
             }
             alt="logo.png"
-            className=""
           />
         </Link>
 
@@ -76,6 +90,9 @@ function Navbar(props) {
           </Link>
           <Link to="/calculator" className="mr-2 px-4 py-3">
             Calculator
+          </Link>
+          <Link to="/weight-logs" className="mr-2 px-4 py-3">
+            Weight Logs
           </Link>
           <Link to="/contact" className="px-4 py-3">
             Contact
@@ -154,6 +171,12 @@ function Navbar(props) {
           className="w-full border border-zinc-100 py-4 text-center"
         >
           Calculator
+        </Link>
+        <Link
+          to="/weight-logs"
+          className="w-full border border-zinc-100 py-4 text-center"
+        >
+          Weight Logs
         </Link>
         <Link
           to="/contact"
