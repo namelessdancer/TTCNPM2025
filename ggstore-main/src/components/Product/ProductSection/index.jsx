@@ -1,50 +1,43 @@
 import { useEffect, useState } from "react";
-// import ProductCategory from "../ProductCategory";
 import ProductContainer from "../ProductContainer";
 import ProductItem from "../ProductItem";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { ApiBaseUrl } from "../../../global/global-variables";
 
 function ProductSection(props) {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    const url = ApiBaseUrl; // Đổi sang đúng endpoint của bạn
+    const url = ApiBaseUrl; // Đổi sang đúng endpoint
 
     const fetchData = async () => {
       try {
-        const response = await fetch(url);
-        const json = await response.json();
+        const response = await fetch(url); // Gọi API tới URL
+        const json = await response.json(); // Chuyển response thành JSON
 
-        // Nếu backend trả ra object { data: [...] }
+        // Nếu backend trả về dạng { data: [...] } thì lấy .data, nếu không thì dùng trực tiếp
         const data = json.data || json; // fallback nếu là mảng
-        setProducts(data);
+        setProducts(data); // Lưu dữ liệu vào state
       } catch (error) {
-        console.log("error", error);
+        console.log("error", error); // In ra nếu có lỗi
       }
     };
 
-    fetchData();
+    fetchData(); // Gọi hàm fetchData khi component được mount
   }, []);
 
-  function HandleButtonRender(props) {
-    if (props.button) {
-      return (
-        <div className="mb-24 flex w-full justify-center">
-          <Link
-            to={"/product"}
-            className="rounded-3xl border-2 border-blue-500 bg-blue-500 px-8 py-2 text-sm font-medium text-white shadow-md duration-300 ease-in-out hover:border-blue-500 hover:bg-white hover:text-blue-500"
-          >
-            Browse All Items
-          </Link>
-        </div>
-      );
-    }
-  }
-
-  // function HandleCategoryRender(props) {
-  //   if (props.category) {
-  //     return <ProductCategory />;
+  // function HandleButtonRender(props) {
+  //   if (props.button) {
+  //     return (
+  //       <div className="mb-24 flex w-full justify-center">
+  //         <Link
+  //           to={"/product"}
+  //           className="rounded-3xl border-2 border-blue-500 bg-blue-500 px-8 py-2 text-sm font-medium text-white shadow-md duration-300 ease-in-out hover:border-blue-500 hover:bg-white hover:text-blue-500"
+  //         >
+  //           Browse All Items
+  //         </Link>
+  //       </div>
+  //     );
   //   }
   // }
 
@@ -71,7 +64,7 @@ function ProductSection(props) {
           ))}
         </ProductContainer>
       </div>
-      {HandleButtonRender(props)}
+      {/* {HandleButtonRender(props)} */}
     </>
   );
 }
