@@ -1,3 +1,4 @@
+// models/WeightLog.js
 const mongoose = require("mongoose");
 
 const weightLogSchema = new mongoose.Schema({

@@ -1,3 +1,4 @@
+// routes/weightLogs.js
 const express = require("express");
 const router = express.Router();
 const WeightLog = require("../models/WeightLog");
